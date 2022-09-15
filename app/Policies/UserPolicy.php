@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,26 +17,19 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        //Xử lý logic để return true hoặc false
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Post $post)
+    public function view(User $user, User $model)
     {
-//        if ($user->id === $post->user_id){
-//            return true;
-//        }
-//
-//        return false;
-
-        return $user->id === $post->user_id;
+        //
     }
 
     /**
@@ -49,66 +41,49 @@ class PostPolicy
     public function create(User $user)
     {
         $group = $user->group;
-        return isRole($group, 'posts', 'add');
+        return isRole($group, 'users', 'add');
+    }
+
+    public function updateAny(User $user){
+        return isRole($user->group, 'users', 'edit');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-
-    public function updateAny(User $user){
-        $group = $user->group;
-
-        return isRole($group, 'posts', 'edit');
+    public function update(User $user, User $model)
+    {
+        //
     }
 
-    public function update(User $user, Post $post)
-    {
-        $group = $user->group;
-        if (isRole($group, 'posts', 'edit')){
-            return $user->id == $post->user_id;
-        }
-
-        return false;
-
+    public function deleteAny(User $user){
+        return isRole($user->group, 'users', 'delete');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-
-    public function deleteAny(User $user){
-        $group = $user->group;
-
-        return isRole($group, 'posts', 'delete');
-    }
-
-    public function delete(User $user, Post $post)
+    public function delete(User $user, User $model)
     {
-        $group = $user->group;
-        if (isRole($group, 'posts', 'delete')){
-            return $user->id == $post->user_id;
-        }
-
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Post $post)
+    public function restore(User $user, User $model)
     {
         //
     }
@@ -117,10 +92,10 @@ class PostPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Post $post)
+    public function forceDelete(User $user, User $model)
     {
         //
     }

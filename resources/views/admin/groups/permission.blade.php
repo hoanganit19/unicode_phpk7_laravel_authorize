@@ -43,6 +43,13 @@
                                         <input id="role_{{$module->name}}_delete" type="checkbox" name="role[{{$module->name}}][]" value="delete" {{isRole($group, $module->name, 'delete')?'checked':false}}/> Xoá
                                     </label>
                                 </div>
+                                @if ($module->name=='groups')
+                                    <div class="col-3">
+                                        <label for="role_{{$module->name}}_permission">
+                                            <input id="role_{{$module->name}}_permission" type="checkbox" name="role[{{$module->name}}][]" value="permission" {{isRole($group, $module->name, 'permission')?'checked':false}}/> Phân quyền
+                                        </label>
+                                    </div>
+                                @endcan
                             </div>
                         </td>
                     </tr>

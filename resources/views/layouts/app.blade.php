@@ -78,6 +78,10 @@
         <main class="py-4">
             <div class="container">
                 <div class="row">
+                    @php
+                        $isLogin = \Auth::check();
+                    @endphp
+                    @if ($isLogin)
                     <div class="col-3">
                         <h3>Menu</h3>
 
@@ -85,18 +89,25 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{route('admin.index')}}">Trang tổng quan</a>
                             </li>
+                            @can('posts.view')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.posts.index')}}">Quản lý bài viết</a>
                             </li>
+                            @endcan
+                            @can('groups.view')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.groups.index')}}">Quản lý nhóm</a>
                             </li>
+                            @endcan
+                            @can('users.view')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.users.index')}}">Quản lý người dùng</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
-                    <div class="col-9">
+                    @endif
+                    <div class="col-{{$isLogin?9:12}}">
                         @yield('content')
                     </div>
                 </div>
